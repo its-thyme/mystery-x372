@@ -1,11 +1,16 @@
-import React from 'react'
+import React, { Component } from 'react'
+import styles from './App.less';
 
-export default class App extends React.Component {
+import TerminalContainer from '../containers/terminal/TerminalContainer';
+
+class App extends Component {
   render () {
     return (
       <div>
-        <h1>Change me</h1>
+        <TerminalContainer />
       </div>
     )
   }
 }
+
+export default App;

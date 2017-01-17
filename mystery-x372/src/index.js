@@ -1,5 +1,14 @@
-import React from 'react'
-import { render } from 'react-dom'
-import App from './components/app'
+import React from 'react';
+import { render } from 'react-dom';
+import { Provider } from 'react-redux';
 
-render(<App/>, document.getElementById('main'))
+import { createReduxStore } from './utils/reduxUtils';
+import AppContainer from './containers/AppContainer';
+
+const store = createReduxStore();
+
+render (
+  <Provider store={store}>
+    <AppContainer />
+  </Provider>,
+  document.getElementById('main'));
