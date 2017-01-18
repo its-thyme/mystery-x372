@@ -3,9 +3,14 @@
 .userMessage {
   text-align: right;
   color: @white;
+  width: 300px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: pre-wrap;
 }
 
 .computerMessage {
+  .userMessage();
   text-align: left;
   color: @gray;
 }
