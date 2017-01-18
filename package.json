@@ -20,6 +20,8 @@
   "dependencies": {
     "express": "^4.13.4",
     "less": "^2.7.2",
+    "lodash.findkey": "^4.6.0",
+    "lodash.get": "^4.4.2",
     "react": "^15.4.2",
     "react-addons-css-transition-group": "^15.4.2",
     "react-dom": "^15.4.2",

@@ -3,7 +3,10 @@ import Terminal from '../../components/terminal/Terminal';
 import { parseUserMessage } from '../../utils/terminal';
 import {
   addUserMessage,
-  addComputerMessage
+  addComputerMessage,
+  printDirectory,
+  changeDirectory,
+  listDirectory
 } from '../../redux/modules/terminal';
 
 
@@ -19,7 +22,26 @@ function mapStateToProps(state) {
 const mapDispatchToProps = (dispatch) => ({
   addMessage: (text, currentDir) => {
     dispatch(addUserMessage(text));
-    dispatch(addComputerMessage(parseUserMessage(text, currentDir)));
+    const command = parseUserMessage(text);
+    if (!command) {
+      dispatch(addComputerMessage(`${text}: command not found`));
+    }
+    else {
+      switch (command.command) {
+        case 'pwd':
+          dispatch(printDirectory());
+          return;
+        case 'cd':
+          dispatch(changeDirectory(command.path));
+          return;
+        case 'ls':
+          dispatch(listDirectory(command.path, command.showHidden));
+          return;
+        default:
+          dispatch(addComputerMessage(`${text}: command not found`));
+          return;
+      }
+    }
   }
 });
 
