@@ -9,6 +9,9 @@
     "build": "cross-env NODE_ENV=production webpack --config ./webpack.prod.config.js --progress --colors",
     "start": "node app.js"
   },
+  "engines": {
+    "node": "6.0.0"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/its-thyme/mystery-x372.git"
