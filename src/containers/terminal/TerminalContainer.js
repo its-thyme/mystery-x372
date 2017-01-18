@@ -7,7 +7,8 @@ import {
   printDirectory,
   changeDirectory,
   listDirectory,
-  clear
+  clear,
+  showFileContents
 } from '../../redux/modules/terminal';
 
 
@@ -31,19 +32,22 @@ const mapDispatchToProps = (dispatch) => ({
       switch (command.command) {
         case 'pwd':
           dispatch(printDirectory());
-          return;
+          break;
         case 'cd':
           dispatch(changeDirectory(command.path));
-          return;
+          break;
         case 'ls':
           dispatch(listDirectory(command.path, command.showHidden));
-          return;
+          break;
         case 'clear':
           dispatch(clear());
-          return;
+          break;
+        case 'cat':
+          dispatch(showFileContents(command.path));
+          break;
         default:
           dispatch(addComputerMessage(`${text}: command not found`));
-          return;
+          break;
       }
     }
   }

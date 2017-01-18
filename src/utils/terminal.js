@@ -17,8 +17,9 @@ export function parseUserMessage(text) {
         command: ciText[0].toLowerCase()
       };
     case 'cd':
+    case 'cat':
       return {
-        command: 'cd',
+        command: ciText[0].toLowerCase(),
         path: ciText[1]
       };
     case 'ls':
@@ -36,23 +37,7 @@ export function parseUserMessage(text) {
   }
 };
 
-export function showAllFiles(dir, showHidden) {
-  const path = dir.substr(1).replace(/\//g, '.');
-  const loc = dir === '/' ? fileStructure : get(fileStructure, path);
-  return Object.keys(loc).filter((key) => {
-    return key !== 'type' && (showHidden || key.charAt(0) !== '.');
-  }).sort();
-}
-
-export function parseDirChange(dir, currentDir) {
-
-  if (!dir) {
-    return {
-      valid: true,
-      newPath: '/Users/Diana'
-    };
-  }
-
+export function parsePath(dir, currentDir) {
   const path = dir.split('/');
   let outputPath = '';
 
@@ -88,7 +73,7 @@ export function parseDirChange(dir, currentDir) {
         message: `${dir}: No such file or directory`
       };
     }
-    if (loc[path[i]].type !== fileTypes.DIRECTORY) {
+    if (i !== path.length -1 && loc[path[i]].type !== fileTypes.DIRECTORY) {
       return {
         valid: false,
         message: `${dir}: Not a directory`
@@ -100,8 +85,71 @@ export function parseDirChange(dir, currentDir) {
 
   return {
     valid: true,
-    newPath: outputPath === '' ? '/' : outputPath
+    newPath: outputPath === '' ? '/' : outputPath,
+    loc
   };
+}
+
+export function getFileContents(dir, currentDir) {
+  if (!dir) {
+    return {
+      valid: false,
+      message: `cat: No such file or directory`
+    };
+  }
+  const pathInfo = parsePath(dir, currentDir);
+  if (!pathInfo.valid) {
+    return {
+      valid: false,
+      message: `cat: ${pathInfo.message}`
+    }
+  }
+  if (pathInfo.loc.type !== fileTypes.FILE) {
+    return {
+      valid: false,
+      message: `cd: ${dir}: Is a directory`
+    }
+  }
+  return {
+    valid: true,
+    message: pathInfo.loc.contents
+  };
+}
+
+export function showAllFiles(dir, showHidden) {
+  const path = dir.substr(1).replace(/\//g, '.');
+  const loc = dir === '/' ? fileStructure : get(fileStructure, path);
+  return Object.keys(loc).filter((key) => {
+    return key !== 'type' && (showHidden || key.charAt(0) !== '.');
+  }).sort();
+}
+
+export function parseDirChange(dir, currentDir) {
+
+  if (!dir) {
+    return {
+      valid: true,
+      newPath: '/Users/Diana'
+    };
+  }
+
+  const pathInfo = parsePath(dir, currentDir);
+  if (!pathInfo.valid) {
+    return {
+      valid: false,
+      message: `cd: ${pathInfo.message}`
+    }
+  }
+  if (pathInfo.newPath === '/') {
+    return pathInfo;
+  }
+  if (pathInfo.loc.type !== fileTypes.DIRECTORY) {
+    return {
+      valid: false,
+      message: `cd: ${dir}: Not a directory`
+    }
+  }
+  return pathInfo;
 }
 
 const fileStructure = {
