@@ -1,5 +1,6 @@
 const path = require('path')
 const webpack = require('webpack')
+const autoprefixer = require('autoprefixer')
 
 module.exports = {
   devtool: 'source-map',
@@ -12,6 +13,19 @@ module.exports = {
     path: path.join(__dirname, 'public'),
     filename: 'bundle.js',
     publicPath: '/public/'
+  },
+
+  postcss: function() {
+    return [
+      autoprefixer({
+        browsers: [
+          '>1%',
+          'last 4 versions',
+          'Firefox ESR',
+          'not ie < 9', // React doesn't support IE8 anyway
+        ]
+      }),
+    ];
   },
 
   plugins: [
@@ -35,7 +49,7 @@ module.exports = {
         loader: 'babel',
         include: path.join(__dirname, 'src') },
       { test: /\.less?$/,
-        loader: 'style-loader!css-loader!less-loader',
+        loader: 'style-loader!css-loader!postcss-loader!less-loader',
         include: path.join(__dirname, 'src') },
       { test: /\.png$/,
         loader: 'file' },

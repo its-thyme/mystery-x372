@@ -1,0 +1,25 @@
+@import '../../variables.less';
+
+.userMessage {
+  text-align: right;
+  color: @white;
+}
+
+.computerMessage {
+  text-align: left;
+  color: @gray;
+}
+
+.thinkingMessage {
+  .computerMessage();
+  animation: 1.5s blink ease-in infinite;
+}
+
+@keyframes "blink" {
+  from, to {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+}

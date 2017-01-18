@@ -18,6 +18,7 @@ export function addComputerMessage(text) {
 export const initialState = {
   inputEnabled: true,
   computerThinking: false,
+  currentDir: '/Users/Diana',
   messages: []
 };
 
@@ -27,7 +28,7 @@ export default function terminal(state = initialState, action) {
       return {
         ...state,
         messages: [
-          ...messages,
+          ...state.messages,
           {
             type: 'USER',
             text: action.text
@@ -40,7 +41,7 @@ export default function terminal(state = initialState, action) {
       return {
         ...state,
         messages: [
-          ...messages,
+          ...state.messages,
           {
             type: 'COMPUTER',
             text: action.text

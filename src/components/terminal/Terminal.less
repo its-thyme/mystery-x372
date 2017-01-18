@@ -1,0 +1,65 @@
+@import '../../variables.less';
+
+.outputContainer {
+  position: absolute;
+  bottom: 50%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.messageContainer {
+  width: 300px;
+  height: 300px;
+  display: table-cell;
+  vertical-align: bottom;
+}
+
+.mainContainer {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 300px;
+}
+
+.mainInput {
+  border: none;
+  background: @black;
+  width: 95%;
+  color: transparent;
+  text-shadow: 0 0 0 @white;
+  text-align: right;
+  font-family: 'Iceland', monospace;
+  font-size: 24px;
+}
+
+.blinkingCursor {
+  position: absolute;
+  right: 0;
+  bottom: 3px;
+  width: 12px;
+  height: 20px;
+  background: @white;
+  animation: 1.5s cursorblink step-end infinite;
+}
+
+@keyframes "cursorblink" {
+  from, to {
+    background: transparent;
+  }
+  50% {
+    background: @white;
+  }
+}
+
+.fadeIn-enter {
+  overflow: hidden;
+  opacity: 0;
+  max-height: 0;
+}
+
+.fadeIn-enter.fadeIn-enter-active {
+  opacity: 1;
+  max-height: 500px;
+  transition: opacity 1s ease-in, max-height 1.5s ease-in;
+}
