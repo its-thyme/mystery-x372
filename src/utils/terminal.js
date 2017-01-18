@@ -12,8 +12,9 @@ export function parseUserMessage(text) {
   const ciText = text.split(' ');
   switch (ciText[0].toLowerCase()) {
     case 'pwd':
+    case 'clear':
       return {
-        command: 'pwd'
+        command: ciText[0].toLowerCase()
       };
     case 'cd':
       return {

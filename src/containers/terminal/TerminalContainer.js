@@ -6,7 +6,8 @@ import {
   addComputerMessage,
   printDirectory,
   changeDirectory,
-  listDirectory
+  listDirectory,
+  clear
 } from '../../redux/modules/terminal';
 
 
@@ -36,6 +37,9 @@ const mapDispatchToProps = (dispatch) => ({
           return;
         case 'ls':
           dispatch(listDirectory(command.path, command.showHidden));
+          return;
+        case 'clear':
+          dispatch(clear());
           return;
         default:
           dispatch(addComputerMessage(`${text}: command not found`));

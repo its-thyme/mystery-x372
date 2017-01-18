@@ -5,6 +5,7 @@ export const ADD_COMPUTER_MESSAGE = 'terminal/ADD_COMPUTER_MESSAGE';
 export const CHANGE_DIRECTORY = 'terminal/CHANGE_DIRECTORY';
 export const PRINT_DIRECTORY = 'terminal/PRINT_DIRECTORY';
 export const LIST_DIRECTORY = 'terminal/LIST_DIRECTORY';
+export const CLEAR = 'terminal/CLEAR';
 
 export function addUserMessage(text) {
   return {
@@ -38,6 +39,12 @@ export function listDirectory(path, showHidden) {
     type: LIST_DIRECTORY,
     path,
     showHidden
+  };
+}
+
+export function clear() {
+  return {
+    type: CLEAR
   };
 }
 
@@ -155,6 +162,13 @@ export default function terminal(state = initialState, action) {
       };
     case LIST_DIRECTORY:
       return attemptListDirectory(action.path, action.showHidden, state);
+    case CLEAR:
+      return {
+        ...state,
+        messages: [],
+        inputEnabled: true,
+        computerThinking: false
+      }
     default:
       return state;
   }

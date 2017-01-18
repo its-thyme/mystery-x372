@@ -50,7 +50,7 @@ class Terminal extends Component {
             <CSSTransitionGroup
               transitionName="fadeIn"
               transitionEnterTimeout={1500}
-              transitionLeaveTimeout={1500}
+              transitionLeaveTimeout={1}
             >
               {messages.map((message, index) => {
                 return <Message key={index} message={message} />;
