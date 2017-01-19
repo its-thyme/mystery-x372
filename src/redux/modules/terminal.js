@@ -12,6 +12,7 @@ export const PRINT_DIRECTORY = 'terminal/PRINT_DIRECTORY';
 export const LIST_DIRECTORY = 'terminal/LIST_DIRECTORY';
 export const CLEAR = 'terminal/CLEAR';
 export const SHOW_FILE_CONTENTS = 'terminal/SHOW_FILE_CONTENTS';
+export const SHOW_HELP = 'terminal/SHOW_HELP';
 
 export function addUserMessage(text) {
   return {
@@ -59,6 +60,12 @@ export function showFileContents(path) {
     type: SHOW_FILE_CONTENTS,
     path
   }
+}
+
+export function showHelp() {
+  return {
+    type: SHOW_HELP
+  };
 }
 
 function attemptDirChange(newDirectory, state) {
@@ -139,6 +146,15 @@ function showFile(path, state) {
   };
 }
 
+function getHelpText() {
+  return `cat {filePath}: Display file contents.
+cd {filePath}: Change current directory.
+clear: Clear terminal contents.
+ls: Display files in current directory.
+ls {path}: Display files in given location.
+pwd: Display current directory path.`;
+}
+
 export const initialState = {
   inputEnabled: true,
   computerThinking: false,
@@ -197,9 +213,22 @@ export default function terminal(state = initialState, action) {
         messages: [],
         inputEnabled: true,
         computerThinking: false
-      }
+      };
     case SHOW_FILE_CONTENTS:
       return showFile(action.path, state);
+    case SHOW_HELP:
+      return {
+        ...state,
+        messages: [
+          ...state.messages,
+          {
+            type: 'COMPUTER',
+            text: getHelpText()
+          }
+        ],
+        inputEnabled: true,
+        computerThinking: false,
+      };
     default:
       return state;
   }

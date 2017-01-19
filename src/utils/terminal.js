@@ -13,6 +13,7 @@ export function parseUserMessage(text) {
   switch (ciText[0].toLowerCase()) {
     case 'pwd':
     case 'clear':
+    case 'help':
       return {
         command: ciText[0].toLowerCase()
       };

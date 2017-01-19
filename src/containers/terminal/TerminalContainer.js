@@ -8,7 +8,8 @@ import {
   changeDirectory,
   listDirectory,
   clear,
-  showFileContents
+  showFileContents,
+  showHelp
 } from '../../redux/modules/terminal';
 
 
@@ -44,6 +45,9 @@ const mapDispatchToProps = (dispatch) => ({
           break;
         case 'cat':
           dispatch(showFileContents(command.path));
+          break;
+        case 'help':
+          dispatch(showHelp());
           break;
         default:
           dispatch(addComputerMessage(`${text}: command not found`));

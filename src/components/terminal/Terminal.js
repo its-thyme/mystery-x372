@@ -17,6 +17,7 @@ class Terminal extends Component {
     super();
     this.onInputChange = this.onInputChange.bind(this);
     this.onInputEnter = this.onInputEnter.bind(this);
+    this.onBlur = this.onBlur.bind(this);
     this.state = {
       text: ''
     }
@@ -37,6 +38,10 @@ class Terminal extends Component {
       this.props.addMessage(this.state.text, this.props.currentDir);
       this.setState({ text: '' });
     }
+  }
+
+  onBlur() {
+    this.input.focus();
   }
 
   render() {
@@ -71,6 +76,8 @@ class Terminal extends Component {
             onKeyPress={this.onInputEnter}
             disabled={!inputEnabled}
             value={this.state.text}
+            ref={(c)=>{this.input = c;}}
+            onBlur={this.onBlur}
           />
           <div className={inputEnabled ? "blinkingCursor" : ''} />
         </div>

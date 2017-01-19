@@ -5,6 +5,8 @@ import { Provider } from 'react-redux';
 import { createReduxStore } from './utils/reduxUtils';
 import AppContainer from './containers/AppContainer';
 
+console.log('need a hint? try typing help.');
+
 const store = createReduxStore();
 
 render (
