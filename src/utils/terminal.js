@@ -56,9 +56,11 @@ export function parsePath(dir, currentDir) {
     }
     if (path[i] === '..') {
       const pathSplit = outputPath.lastIndexOf('/');
-      const tempLoc = findKey(fileStructure, (file) => {
+      const tempLoc = get(fileStructure,
+        outputPath.substr(1, pathSplit - 1).replace(/\//g, '.'));
+      /** findKey(fileStructure, (file) => {
         return file.hasOwnProperty(outputPath.substr(pathSplit + 1));
-      });
+      });*/
       if (tempLoc === undefined) {
         loc = fileStructure;
       } else {

@@ -77,7 +77,7 @@ function attemptDirChange(newDirectory, state) {
       ...state.messages,
       {
         type: 'COMPUTER',
-        text: `cd: ${destination.message}`
+        text: destination.message
       }
     ],
     inputEnabled: true,
